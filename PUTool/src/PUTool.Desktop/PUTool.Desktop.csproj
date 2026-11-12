@@ -1,16 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<OutputType>WinExe</OutputType>
 		<AssemblyName>PUTool</AssemblyName>
 		<RootNamespace>PUTool</RootNamespace>
 		<Product>PUTool</Product>
 		<Title>PUTool</Title>
-		<Description>Cross-platform NuGet package management utility</Description>
-		<Version>0.2.0</Version>
+		<ApplicationIcon>Assets\avalonia-logo.ico</ApplicationIcon>
 		<TargetFramework>net10.0</TargetFramework>
 		<Nullable>enable</Nullable>
 		<ImplicitUsings>enable</ImplicitUsings>
 		<AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
+		<PublishSingleFile>true</PublishSingleFile>
+		<SelfContained>true</SelfContained>
+		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 	</PropertyGroup>
 	
 	<ItemGroup>
@@ -20,5 +22,13 @@
 		<PackageReference Include="Avalonia.Desktop" Version="12.1.6" />
 		<PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.6" />
 		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <AvaloniaResource Remove="Assets\avalonia.svg" />
+	</ItemGroup>
+	
+	<ItemGroup>
+	  <AvaloniaResource Remove="Assets\avalonia.ico" />
 	</ItemGroup>
 </Project>

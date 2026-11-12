@@ -68,19 +68,19 @@ A metadata-based compatibility recommendation is not a guarantee that the entire
 Run the commands from the repository root. Each command publishes a self-contained application for the selected runtime identifier.
 
 # 🪟 WINDOWS x64
-dotnet publish -c Release -r win-x64 --self-contained true -o publish/releases/FCPApp-Windows-x64
+dotnet publish .\src\PUTool.Desktop\PUTool.Desktop.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o .\publish\releases\PUTool-Windows-x64
 
 # 🪟 WINDOWS ARM64
-dotnet publish -c Release -r win-arm64 --self-contained true -o publish/releases/FCPApp-Windows-ARM64
+dotnet publish .\src\PUTool.Desktop\PUTool.Desktop.csproj -c Release -r win-arm64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o .\publish\releases\PUTool-Windows-ARM64
 
 # 🐧 LINUX x64
-dotnet publish -c Release -r linux-x64 --self-contained true -o publish/releases/FCPApp-Linux-x64
+dotnet publish .\src\PUTool.Desktop\PUTool.Desktop.csproj -c Release -r linux-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o .\publish\releases\PUTool-Linux-x64
 
 # 🐧 LINUX ARM64
-dotnet publish -c Release -r linux-arm64 --self-contained true -o publish/releases/FCPApp-Linux-ARM64
+dotnet publish .\src\PUTool.Desktop\PUTool.Desktop.csproj -c Release -r linux-arm64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o .\publish\releases\PUTool-Linux-ARM64
 
 # 🍎 macOS Intel (x64)
-dotnet publish -c Release -r osx-x64 --self-contained true -o publish/releases/FCPApp-macOS-Intel
+dotnet publish .\src\PUTool.Desktop\PUTool.Desktop.csproj -c Release -r osx-x64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o .\publish\releases\PUTool-macOS-Intel
 
 # 🍎 macOS Apple Silicon (ARM64)
-dotnet publish -c Release -r osx-arm64 --self-contained true -o publish/releases/FCPApp-macOS-AppleSilicon
+dotnet publish .\src\PUTool.Desktop\PUTool.Desktop.csproj -c Release -r osx-arm64 --self-contained true -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true -o .\publish\releases\PUTool-macOS-AppleSilicon
