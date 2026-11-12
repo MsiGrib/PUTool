@@ -1,3 +1,5 @@
+using PUTool.Core.Enums;
+
 namespace PUTool.Core.Models;
 
 public sealed record NuGetVersionRecommendation

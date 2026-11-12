@@ -1,5 +1,6 @@
 using System.Text;
 using PUTool.Core.Models;
+using PUTool.Infrastructure.Models;
 using PUTool.Infrastructure.Processes;
 
 namespace PUTool.Infrastructure.Execution;

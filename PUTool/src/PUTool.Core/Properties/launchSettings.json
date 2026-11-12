@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "PUTool.Core": {
+      "commandName": "Project"
+    },
+    "PUTool.Desktop": {
+      "commandName": "Executable",
+      "executablePath": "C:\\ProjectsMy\\PUTool\\PUTool\\src\\PUTool.Desktop\\PUTool.Desktop.csproj"
+    }
+  }
+}

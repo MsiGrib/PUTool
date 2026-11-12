@@ -6,7 +6,9 @@
         Title="PUTool"
         Background="#0A1020"
         WindowStartupLocation="CenterScreen">
+
   <Grid ColumnDefinitions="252,*" Background="#0A1020">
+
     <!-- Sidebar -->
     <Border Grid.Column="0" Background="#0D1728" BorderBrush="#1B2A42" BorderThickness="0,0,1,0">
       <Grid RowDefinitions="Auto,*,Auto">
@@ -430,4 +432,5 @@
       </ScrollViewer>
     </Grid>
   </Grid>
+
 </Window>
