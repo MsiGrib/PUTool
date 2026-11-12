@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<AssemblyName>PUTool</AssemblyName>
+		<RootNamespace>PUTool</RootNamespace>
+		<Product>PUTool</Product>
+		<Title>PUTool</Title>
+		<Description>Cross-platform NuGet package management utility</Description>
+		<Version>0.2.0</Version>
+		<TargetFramework>net10.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<AvaloniaUseCompiledBindingsByDefault>false</AvaloniaUseCompiledBindingsByDefault>
+	</PropertyGroup>
+	
+	<ItemGroup>
+		<ProjectReference Include="../PUTool.Core/PUTool.Core.csproj" />
+		<ProjectReference Include="../PUTool.Infrastructure/PUTool.Infrastructure.csproj" />
+		<PackageReference Include="Avalonia" Version="12.1.6" />
+		<PackageReference Include="Avalonia.Desktop" Version="12.1.6" />
+		<PackageReference Include="Avalonia.Themes.Fluent" Version="12.1.6" />
+		<PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.2" />
+	</ItemGroup>
+</Project>

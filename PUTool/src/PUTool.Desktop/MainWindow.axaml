@@ -1,0 +1,433 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="PUTool.Desktop.MainWindow"
+        Width="1440" Height="920"
+        MinWidth="1120" MinHeight="720"
+        Title="PUTool"
+        Background="#0A1020"
+        WindowStartupLocation="CenterScreen">
+  <Grid ColumnDefinitions="252,*" Background="#0A1020">
+    <!-- Sidebar -->
+    <Border Grid.Column="0" Background="#0D1728" BorderBrush="#1B2A42" BorderThickness="0,0,1,0">
+      <Grid RowDefinitions="Auto,*,Auto">
+        <StackPanel Margin="22,24,18,22" Spacing="17">
+          <StackPanel Orientation="Horizontal" Spacing="12">
+            <Border Width="40" Height="40" CornerRadius="12" Background="#1D4778" VerticalAlignment="Center">
+              <TextBlock Text="P" FontSize="23" FontWeight="Bold" Foreground="#A9D8FF" HorizontalAlignment="Center" VerticalAlignment="Center" />
+            </Border>
+            <StackPanel VerticalAlignment="Center" Spacing="1">
+              <TextBlock Text="PUTool" FontSize="15" FontWeight="Bold" Foreground="#F3F6FC" />
+              <TextBlock Text="PACKAGE MANAGER" FontSize="9" FontWeight="SemiBold" Foreground="#71829D" LetterSpacing="1.5" />
+            </StackPanel>
+          </StackPanel>
+          <Border Height="1" Background="#1B2A42" Margin="0,3,0,0" />
+          <TextBlock Text="WORKSPACE" Foreground="#65748E" FontSize="10" FontWeight="Bold" LetterSpacing="1.4" />
+          <StackPanel Spacing="3">
+            <Button Classes="nav" Classes.selected="{Binding IsOverview}" Command="{Binding NavigateCommand}" CommandParameter="Overview">
+              <StackPanel Orientation="Horizontal" Spacing="13"><TextBlock Text="◈" FontSize="17"/><TextBlock Text="Overview" VerticalAlignment="Center"/></StackPanel>
+            </Button>
+            <Button Classes="nav" Classes.selected="{Binding IsProjects}" Command="{Binding NavigateCommand}" CommandParameter="Projects">
+              <StackPanel Orientation="Horizontal" Spacing="13"><TextBlock Text="▦" FontSize="16"/><TextBlock Text="Projects" VerticalAlignment="Center"/></StackPanel>
+            </Button>
+            <Button Classes="nav" Classes.selected="{Binding IsPackages}" Command="{Binding NavigateCommand}" CommandParameter="Packages">
+              <StackPanel Orientation="Horizontal" Spacing="13"><TextBlock Text="◇" FontSize="18"/><TextBlock Text="All packages" VerticalAlignment="Center"/></StackPanel>
+            </Button>
+            <Button Classes="nav" Classes.selected="{Binding IsPlan}" Command="{Binding NavigateCommand}" CommandParameter="Plan">
+              <StackPanel Orientation="Horizontal" Spacing="13"><TextBlock Text="⇧" FontSize="19"/><TextBlock Text="Update plan" VerticalAlignment="Center"/></StackPanel>
+            </Button>
+          </StackPanel>
+          <TextBlock Text="PREFERENCES" Foreground="#65748E" FontSize="10" FontWeight="Bold" LetterSpacing="1.4" Margin="0,10,0,0" />
+          <Button Classes="nav" Classes.selected="{Binding IsSettings}" Command="{Binding NavigateCommand}" CommandParameter="Settings">
+            <StackPanel Orientation="Horizontal" Spacing="13"><TextBlock Text="⚙" FontSize="16"/><TextBlock Text="Settings" VerticalAlignment="Center"/></StackPanel>
+          </Button>
+          <Button Classes="nav" Classes.selected="{Binding IsHelp}" Command="{Binding NavigateCommand}" CommandParameter="Help">
+            <StackPanel Orientation="Horizontal" Spacing="13"><TextBlock Text="?" FontSize="16"/><TextBlock Text="Help" VerticalAlignment="Center"/></StackPanel>
+          </Button>
+        </StackPanel>
+
+        <Border Grid.Row="2" Background="#111F34" CornerRadius="12" Margin="15,10,15,18" Padding="13">
+          <StackPanel Spacing="7">
+            <TextBlock Text="ANALYSIS STATUS" FontSize="9" FontWeight="Bold" Foreground="#7486A2" LetterSpacing="1.2" />
+            <Grid ColumnDefinitions="8,*" ColumnSpacing="9">
+              <Ellipse Width="7" Height="7" Fill="#35D6A0" VerticalAlignment="Top" Margin="0,4,0,0" />
+              <TextBlock Grid.Column="1" Text="{Binding StatusMessage}" Foreground="#D5E0F0" FontSize="11" TextWrapping="Wrap" />
+            </Grid>
+            <TextBlock Text="Local analysis · Safe package updates" Foreground="#71829D" FontSize="10" TextWrapping="Wrap" />
+          </StackPanel>
+        </Border>
+      </Grid>
+    </Border>
+
+    <!-- Main workspace -->
+    <Grid Grid.Column="1" RowDefinitions="82,*">
+      <Border Grid.Row="0" BorderBrush="#1B2A42" BorderThickness="0,0,0,1" Background="#0C1424">
+        <Grid ColumnDefinitions="*,Auto" Margin="30,0,30,0">
+          <StackPanel VerticalAlignment="Center" Spacing="3">
+            <TextBlock Text="{Binding SolutionTitle}" Foreground="#F2F5FB" FontSize="16" FontWeight="SemiBold" />
+            <TextBlock Text="{Binding SolutionPathDisplay}" Foreground="#7586A2" FontSize="11" TextTrimming="CharacterEllipsis" />
+          </StackPanel>
+          <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="10" VerticalAlignment="Center">
+            <Border Background="#15243A" CornerRadius="8" Padding="11,8">
+              <StackPanel Orientation="Horizontal" Spacing="7">
+                <Ellipse Width="7" Height="7" Fill="#39D6A2" VerticalAlignment="Center" />
+                <TextBlock Text="{Binding EnvironmentDisplay}" Foreground="#B7C7DD" FontSize="11" VerticalAlignment="Center" />
+              </StackPanel>
+            </Border>
+            <Button Classes="primary" Command="{Binding ChooseFolderCommand}">
+              <StackPanel Orientation="Horizontal" Spacing="8"><TextBlock Text="＋" FontSize="16"/><TextBlock Text="Open solution" VerticalAlignment="Center"/></StackPanel>
+            </Button>
+          </StackPanel>
+        </Grid>
+      </Border>
+
+      <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
+        <Grid Margin="30,26,30,36">
+          <!-- Overview -->
+          <StackPanel IsVisible="{Binding IsOverview}" Spacing="22">
+            <Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="5">
+                <TextBlock Text="Dependency analysis" FontSize="26" FontWeight="Bold" Foreground="#F4F7FC" />
+                <TextBlock Text="Inspect your solution dependencies before changing package versions." FontSize="13" Foreground="#8C9BB2" />
+              </StackPanel>
+            </Grid>
+
+            <Border Background="#132A49" CornerRadius="16" Padding="22">
+              <Grid ColumnDefinitions="*,Auto">
+                <StackPanel Spacing="8" MaxWidth="680">
+                  <TextBlock Text="A clear and safe way to update packages" FontSize="20" FontWeight="SemiBold" Foreground="#F4F8FF" />
+                  <TextBlock Text="Scan your repository, discover centralized versions, compare packages, and prepare a controlled update plan." TextWrapping="Wrap" Foreground="#B2C8E2" FontSize="12" />
+                  <StackPanel Orientation="Horizontal" Spacing="9" Margin="0,7,0,0">
+                    <Button Classes="primary" Command="{Binding ChooseFolderCommand}">Select project folder</Button>
+                    <Button Classes="subtle" Command="{Binding FindUpdatesCommand}" IsEnabled="{Binding HasSnapshot}">Check NuGet updates</Button>
+                  </StackPanel>
+                </StackPanel>
+                <Border Grid.Column="1" Width="104" Height="104" CornerRadius="24" Background="#244E7B" VerticalAlignment="Center" HorizontalAlignment="Right">
+                  <TextBlock Text="↗" FontSize="58" Foreground="#B6E0FF" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                </Border>
+              </Grid>
+            </Border>
+
+            <Grid ColumnDefinitions="*,*,*,*" ColumnSpacing="13">
+              <Border Grid.Column="0" Classes="metric" Background="#111D30" BorderBrush="#23344F" BorderThickness="1" CornerRadius="12" Padding="16">
+                <StackPanel Spacing="7"><TextBlock Text="PROJECTS" Foreground="#7E90AA" FontSize="10" FontWeight="Bold"/><TextBlock Text="{Binding ProjectCount}" FontSize="27" FontWeight="Bold" Foreground="#F0F5FD"/><TextBlock Text="Projects found" FontSize="10" Foreground="#71829D"/></StackPanel>
+              </Border>
+              <Border Grid.Column="1" Background="#111D30" BorderBrush="#23344F" BorderThickness="1" CornerRadius="12" Padding="16">
+                <StackPanel Spacing="7"><TextBlock Text="UNIQUE PACKAGES" Foreground="#7E90AA" FontSize="10" FontWeight="Bold"/><TextBlock Text="{Binding UniquePackageCount}" FontSize="27" FontWeight="Bold" Foreground="#F0F5FD"/><TextBlock Text="Across the solution" FontSize="10" Foreground="#71829D"/></StackPanel>
+              </Border>
+              <Border Grid.Column="2" Background="#111D30" BorderBrush="#23344F" BorderThickness="1" CornerRadius="12" Padding="16">
+                <StackPanel Spacing="7"><TextBlock Text="PACKAGE USAGES" Foreground="#7E90AA" FontSize="10" FontWeight="Bold"/><TextBlock Text="{Binding PackageUsageCount}" FontSize="27" FontWeight="Bold" Foreground="#F0F5FD"/><TextBlock Text="Direct and transitive" FontSize="10" Foreground="#71829D"/></StackPanel>
+              </Border>
+              <Border Grid.Column="3" Background="#111D30" BorderBrush="#23344F" BorderThickness="1" CornerRadius="12" Padding="16">
+                <StackPanel Spacing="7"><TextBlock Text="READY TO UPDATE" Foreground="#7E90AA" FontSize="10" FontWeight="Bold"/><TextBlock Text="{Binding ApplicableUpdateCount}" FontSize="27" FontWeight="Bold" Foreground="#62D9B2"/><TextBlock Text="Metadata compatibility detected" FontSize="10" Foreground="#71829D"/></StackPanel>
+              </Border>
+            </Grid>
+
+            <Grid ColumnDefinitions="1.25*,*" ColumnSpacing="14">
+              <Border Grid.Column="0" Background="#111B2D" BorderBrush="#22324B" BorderThickness="1" CornerRadius="13" Padding="18">
+                <StackPanel Spacing="12">
+                  <TextBlock Text="Workspace" FontSize="16" FontWeight="SemiBold" Foreground="#EAF0F9" />
+                  <TextBlock Text="Root folder" Foreground="#7F91AB" FontSize="11" />
+                  <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <TextBox Text="{Binding RootPath}" Watermark="Folder or .sln path" VerticalContentAlignment="Center" />
+                    <Button Grid.Column="1" Classes="subtle" Command="{Binding ChooseFolderCommand}">Browse…</Button>
+                  </Grid>
+                  <StackPanel Orientation="Horizontal" Spacing="8">
+                    <Button Classes="primary" Command="{Binding ScanCommand}" IsEnabled="{Binding CanScan}">Scan repository</Button>
+                    <Button Classes="subtle" Command="{Binding FindUpdatesCommand}" IsEnabled="{Binding HasSnapshot}">Find updates</Button>
+                  </StackPanel>
+                  <TextBlock Text="{Binding StatusMessage}" Foreground="#9AABC1" FontSize="11" TextWrapping="Wrap" />
+                </StackPanel>
+              </Border>
+              <Border Grid.Column="1" Background="#111B2D" BorderBrush="#22324B" BorderThickness="1" CornerRadius="13" Padding="18">
+                <StackPanel Spacing="10">
+                  <TextBlock Text="Target framework" FontSize="16" FontWeight="SemiBold" Foreground="#EAF0F9" />
+                  <TextBlock Text="Find package versions for the selected TFM. This value is used for compatibility analysis; it does not change TargetFramework in your projects." Foreground="#8293AC" FontSize="11" TextWrapping="Wrap" />
+                  <TextBox Text="{Binding SelectedTargetFramework}" Watermark="net11.0" />
+                  <TextBlock Text="SDK policy" Foreground="#7F91AB" FontSize="10" FontWeight="Bold" />
+                  <TextBlock Text="{Binding SdkPolicyDisplay}" Foreground="#C6D3E5" FontSize="11" TextWrapping="Wrap" />
+                  <Button Classes="subtle" Command="{Binding FindUpdatesCommand}" IsEnabled="{Binding HasSnapshot}">Check compatibility  →</Button>
+                </StackPanel>
+              </Border>
+            </Grid>
+
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="14">
+              <Border Background="#111B2D" BorderBrush="#22324B" BorderThickness="1" CornerRadius="13" Padding="18" MinHeight="164">
+                <StackPanel Spacing="12">
+                  <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                    <TextBlock Text="Central Package Management" Foreground="#EAF0F9" FontSize="14" FontWeight="SemiBold" TextWrapping="Wrap" />
+                    <Border Grid.Column="1" Background="#1B304B" CornerRadius="5" Padding="7,4" VerticalAlignment="Top"><TextBlock Text="CPM" Foreground="#9CCBFA" FontSize="9" FontWeight="Bold" /></Border>
+                  </Grid>
+                  <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10"><TextBlock Text="Projects using CPM" Foreground="#95A6BE" FontSize="12" TextWrapping="Wrap"/><TextBlock Grid.Column="1" Text="{Binding CentralProjectCount}" Foreground="#E7EDF7" FontSize="12" FontWeight="SemiBold"/></Grid>
+                  <Grid ColumnDefinitions="*,Auto" ColumnSpacing="10"><TextBlock Text="Projects using mixed management" Foreground="#95A6BE" FontSize="12" TextWrapping="Wrap"/><TextBlock Grid.Column="1" Text="{Binding MixedProjectCount}" Foreground="#E7EDF7" FontSize="12" FontWeight="SemiBold"/></Grid>
+                  <TextBlock Text="CPM shows where projects get package versions. Details and central file paths are available in the Projects section." TextWrapping="Wrap" FontSize="10" Foreground="#7789A4" />
+                </StackPanel>
+              </Border>
+              <Border Grid.Column="1" Background="#111B2D" BorderBrush="#22324B" BorderThickness="1" CornerRadius="13" Padding="18">
+                <StackPanel Spacing="10">
+                  <TextBlock Text="Scan findings" Foreground="#EAF0F9" FontSize="15" FontWeight="SemiBold" />
+                  <TextBlock Text="Warnings provide additional context. Without project.assets.json, resolved and transitive package versions cannot be displayed." Foreground="#8293AC" FontSize="11" TextWrapping="Wrap" />
+                  <ItemsControl ItemsSource="{Binding Warnings}">
+                    <ItemsControl.ItemTemplate><DataTemplate><TextBlock Text="{Binding}" Foreground="#D7B87A" FontSize="10" TextWrapping="Wrap" Margin="0,2"/></DataTemplate></ItemsControl.ItemTemplate>
+                  </ItemsControl>
+                </StackPanel>
+              </Border>
+            </Grid>
+          </StackPanel>
+
+          <!-- Projects -->
+          <StackPanel IsVisible="{Binding IsProjects}" Spacing="18">
+            <StackPanel Spacing="5"><TextBlock Text="Projects" FontSize="25" FontWeight="Bold" Foreground="#F4F7FC"/><TextBlock Text="Target frameworks and package version management for each project." Foreground="#8C9BB2" FontSize="12"/></StackPanel>
+            <ItemsControl ItemsSource="{Binding Projects}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border Background="#111B2D" BorderBrush="#263751" BorderThickness="1" CornerRadius="12" Padding="17" Margin="0,0,0,10">
+                    <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto,Auto,Auto,Auto">
+                      <StackPanel Spacing="4"><TextBlock Text="{Binding Name}" Foreground="#EAF0F9" FontWeight="SemiBold" FontSize="14"/><TextBlock Text="{Binding FullPath}" Foreground="#788BA7" FontSize="10" TextTrimming="CharacterEllipsis"/></StackPanel>
+                      <Border Grid.Column="1" Background="#203A5A" CornerRadius="7" Padding="9,5" VerticalAlignment="Center"><TextBlock Text="{Binding ManagementMode}" Foreground="#A9D7FF" FontSize="10" FontWeight="Bold"/></Border>
+                      <TextBlock Grid.Row="1" Text="{Binding FrameworkDisplay}" Foreground="#B3C2D8" FontSize="11" Margin="0,11,0,0"/>
+                      <TextBlock Grid.Row="2" Text="{Binding PackageCountLabel}" Foreground="#7387A3" FontSize="10" Margin="0,7,0,0"/>
+                      <ItemsControl Grid.Row="3" ItemsSource="{Binding CentralPackageFiles}" Margin="0,7,0,0">
+                        <ItemsControl.ItemTemplate><DataTemplate><StackPanel Orientation="Horizontal" Spacing="5"><TextBlock Text="Central version files:" Foreground="#74B8EC" FontSize="9"/><TextBlock Text="{Binding}" Foreground="#91A5C0" FontSize="9" TextWrapping="Wrap"/></StackPanel></DataTemplate></ItemsControl.ItemTemplate>
+                      </ItemsControl>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock Text="Project evaluation errors are listed under Scan findings on the Overview page." Foreground="#7387A3" FontSize="10"/>
+          </StackPanel>
+
+          <!-- Packages -->
+          <StackPanel IsVisible="{Binding IsPackages}" Spacing="16">
+            <StackPanel Spacing="5">
+              <TextBlock Text="All packages" FontSize="25" FontWeight="Bold" Foreground="#F4F7FC"/>
+              <TextBlock Text="Switch between individual usages, a deduplicated catalog, project groups, and a compact list of unique package IDs." Foreground="#8C9BB2" FontSize="12" TextWrapping="Wrap"/>
+            </StackPanel>
+            <Grid ColumnDefinitions="Auto,280,*" ColumnSpacing="12">
+              <TextBlock Text="VIEW" Foreground="#8293AC" FontSize="10" FontWeight="Bold" VerticalAlignment="Center"/>
+              <ComboBox Grid.Column="1" ItemsSource="{Binding PackageViewModes}" SelectedItem="{Binding SelectedPackageViewMode}" MinWidth="260"/>
+            </Grid>
+
+            <!-- Mode 1: every package usage, including duplicate package IDs across projects and TFMs. -->
+            <StackPanel IsVisible="{Binding IsAllUsages}" Spacing="8">
+              <TextBlock Text="Every package reference is shown separately. The project name and TFM identify each usage." Foreground="#8C9BB2" FontSize="11" TextWrapping="Wrap"/>
+              <Border Background="#172338" CornerRadius="9" Padding="12">
+                <Grid ColumnDefinitions="1.7*,1*,1*,0.8*,1.2*,1*">
+                  <TextBlock Text="PACKAGE / PROJECT" Foreground="#7186A3" FontSize="9" FontWeight="Bold"/>
+                  <TextBlock Grid.Column="1" Text="REQUESTED" Foreground="#7186A3" FontSize="9" FontWeight="Bold"/>
+                  <TextBlock Grid.Column="2" Text="RESOLVED" Foreground="#7186A3" FontSize="9" FontWeight="Bold"/>
+                  <TextBlock Grid.Column="3" Text="TFM" Foreground="#7186A3" FontSize="9" FontWeight="Bold"/>
+                  <TextBlock Grid.Column="4" Text="MANAGEMENT" Foreground="#7186A3" FontSize="9" FontWeight="Bold"/>
+                  <TextBlock Grid.Column="5" Text="COMPATIBLE" Foreground="#7186A3" FontSize="9" FontWeight="Bold"/>
+                </Grid>
+              </Border>
+              <ItemsControl ItemsSource="{Binding Packages}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Border Background="#111B2D" BorderBrush="#202F47" BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,5">
+                      <Grid ColumnDefinitions="1.7*,1*,1*,0.8*,1.2*,1*">
+                        <StackPanel Spacing="3"><TextBlock Text="{Binding PackageId}" Foreground="#E7EDF7" FontSize="11" FontWeight="SemiBold"/><TextBlock Text="{Binding ProjectName}" Foreground="#7286A3" FontSize="9"/></StackPanel>
+                        <TextBlock Grid.Column="1" Text="{Binding RequestedVersion}" Foreground="#AFC0D7" FontSize="10" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="{Binding ResolvedVersion}" Foreground="#AFC0D7" FontSize="10" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="3" Text="{Binding TargetFramework}" Foreground="#AFC0D7" FontSize="10" VerticalAlignment="Center"/>
+                        <StackPanel Grid.Column="4" Spacing="2" VerticalAlignment="Center"><TextBlock Text="{Binding DisplayMode}" Foreground="#8ABEEB" FontSize="10"/><TextBlock Text="{Binding VersionSourceFile}" Foreground="#7186A3" FontSize="8" TextTrimming="CharacterEllipsis"/></StackPanel>
+                        <StackPanel Grid.Column="5" Spacing="2" VerticalAlignment="Center"><TextBlock Text="{Binding LatestCompatibleVersion}" Foreground="#64D9B2" FontSize="10"/><TextBlock Text="{Binding LatestStableVersion}" Foreground="#7186A3" FontSize="9"/></StackPanel>
+                      </Grid>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+
+            <!-- Mode 2: one detailed summary per package ID, with versions and project counts aggregated. -->
+            <StackPanel IsVisible="{Binding IsPackageCatalog}" Spacing="8">
+              <TextBlock Text="One row per package ID. Multiple current versions, TFMs, or management modes are summarized in the same row; project paths are hidden." Foreground="#8C9BB2" FontSize="11" TextWrapping="Wrap"/>
+              <ItemsControl ItemsSource="{Binding PackageSummaries}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Border Background="#111B2D" BorderBrush="#202F47" BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,6">
+                      <Grid ColumnDefinitions="1.5*,1.2*,1.2*,1*,1.1*,1*" RowDefinitions="Auto,Auto">
+                        <TextBlock Text="{Binding PackageId}" Foreground="#E7EDF7" FontSize="11" FontWeight="SemiBold"/>
+                        <TextBlock Grid.Column="1" Text="{Binding RequestedVersion}" Foreground="#AFC0D7" FontSize="10" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="2" Text="{Binding ResolvedVersion}" Foreground="#AFC0D7" FontSize="10" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="3" Text="{Binding LatestCompatibleVersion}" Foreground="#64D9B2" FontSize="10" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="4" Text="{Binding ProjectCountLabel}" Foreground="#8ABEEB" FontSize="10" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="5" Text="{Binding ManagementMode}" Foreground="#AFC0D7" FontSize="10" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Row="1" Grid.ColumnSpan="6" Text="{Binding SummaryDetails}" Foreground="#7186A3" FontSize="9" Margin="0,5,0,0" TextWrapping="Wrap"/>
+                      </Grid>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+
+            <!-- Mode 3: package IDs are deduplicated inside each project, but may appear in multiple projects. -->
+            <StackPanel IsVisible="{Binding IsByProject}" Spacing="10">
+              <TextBlock Text="Packages are grouped by project. Each package appears once within a project, but is repeated under every project that references it." Foreground="#8C9BB2" FontSize="11" TextWrapping="Wrap"/>
+              <ItemsControl ItemsSource="{Binding ProjectPackageGroups}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Border Background="#111B2D" BorderBrush="#263751" BorderThickness="1" CornerRadius="11" Padding="14" Margin="0,0,0,8">
+                      <StackPanel Spacing="9">
+                        <Grid ColumnDefinitions="*,Auto">
+                          <StackPanel Spacing="3"><TextBlock Text="{Binding ProjectName}" Foreground="#EAF0F9" FontSize="13" FontWeight="SemiBold"/><TextBlock Text="{Binding ProjectPath}" Foreground="#7186A3" FontSize="9" TextTrimming="CharacterEllipsis"/></StackPanel>
+                          <TextBlock Grid.Column="1" Text="{Binding PackageCountLabel}" Foreground="#8ABEEB" FontSize="10" VerticalAlignment="Center"/>
+                        </Grid>
+                        <TextBlock Text="{Binding FrameworkDisplay}" Foreground="#B3C2D8" FontSize="10"/>
+                        <ItemsControl ItemsSource="{Binding Packages}">
+                          <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                              <Border Background="#172338" CornerRadius="7" Padding="10" Margin="0,0,0,4">
+                                <Grid ColumnDefinitions="1.5*,1*,1*,1*,1*">
+                                  <TextBlock Text="{Binding PackageId}" Foreground="#E7EDF7" FontSize="10" FontWeight="SemiBold"/>
+                                  <TextBlock Grid.Column="1" Text="{Binding RequestedVersion}" Foreground="#AFC0D7" FontSize="9"/>
+                                  <TextBlock Grid.Column="2" Text="{Binding ResolvedVersion}" Foreground="#AFC0D7" FontSize="9"/>
+                                  <TextBlock Grid.Column="3" Text="{Binding LatestCompatibleVersion}" Foreground="#64D9B2" FontSize="9"/>
+                                  <TextBlock Grid.Column="4" Text="{Binding ManagementMode}" Foreground="#8ABEEB" FontSize="9"/>
+                                </Grid>
+                              </Border>
+                            </DataTemplate>
+                          </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                      </StackPanel>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+
+            <!-- Mode 4: unique package IDs only, with occurrence counts. -->
+            <StackPanel IsVisible="{Binding IsUniqueIds}" Spacing="8">
+              <TextBlock Text="A compact directory of unique package IDs. No project paths or duplicate package rows are displayed." Foreground="#8C9BB2" FontSize="11" TextWrapping="Wrap"/>
+              <ItemsControl ItemsSource="{Binding UniquePackageEntries}">
+                <ItemsControl.ItemTemplate>
+                  <DataTemplate>
+                    <Border Background="#111B2D" BorderBrush="#202F47" BorderThickness="1" CornerRadius="8" Padding="12" Margin="0,0,0,5">
+                      <Grid ColumnDefinitions="*,Auto">
+                        <TextBlock Text="{Binding PackageId}" Foreground="#E7EDF7" FontSize="11" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                        <TextBlock Grid.Column="1" Text="{Binding Details}" Foreground="#8C9BB2" FontSize="10" VerticalAlignment="Center"/>
+                      </Grid>
+                    </Border>
+                  </DataTemplate>
+                </ItemsControl.ItemTemplate>
+              </ItemsControl>
+            </StackPanel>
+          </StackPanel>
+
+          <!-- Plan -->
+          <StackPanel IsVisible="{Binding IsPlan}" Spacing="18">
+            <Grid ColumnDefinitions="*,Auto">
+              <StackPanel Spacing="5"><TextBlock Text="Update plan" FontSize="25" FontWeight="Bold" Foreground="#F4F7FC"/><TextBlock Text="Review each proposed change before applying it to the repository." Foreground="#8C9BB2" FontSize="12"/><TextBlock Text="Only NuGet package version declarations are changed. TargetFramework/TargetFrameworks, global.json, and SDK settings are left untouched." Foreground="#76B9E8" FontSize="10" TextWrapping="Wrap"/></StackPanel>
+              <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="8" VerticalAlignment="Center">
+                <Button Classes="subtle" Command="{Binding ExportPlanCommand}">Export .md</Button>
+                <Button Classes="primary" Command="{Binding ApplyPlanCommand}" IsEnabled="{Binding CanApply}">Apply changes</Button>
+              </StackPanel>
+            </Grid>
+            <Border Background="#111B2D" BorderBrush="#263751" BorderThickness="1" CornerRadius="10" Padding="12">
+              <StackPanel Spacing="7">
+                <CheckBox IsChecked="{Binding CreateBackup}" Content="Back up modified files before applying changes" Foreground="#DCE6F4" />
+                <TextBlock Text="Backups are enabled by default. If disabled, use Git or another version control system to revert changes." Foreground="#8293AC" FontSize="10" TextWrapping="Wrap" />
+              </StackPanel>
+            </Border>
+            <Border Background="#172338" CornerRadius="9" Padding="12">
+              <Grid ColumnDefinitions="1.7*,1*,1*,1.4*,Auto">
+                <TextBlock Text="PACKAGE" Foreground="#7186A3" FontSize="9" FontWeight="Bold"/><TextBlock Grid.Column="1" Text="CURRENT" Foreground="#7186A3" FontSize="9" FontWeight="Bold"/><TextBlock Grid.Column="2" Text="TARGET" Foreground="#7186A3" FontSize="9" FontWeight="Bold"/><TextBlock Grid.Column="3" Text="VERSION FILE" Foreground="#7186A3" FontSize="9" FontWeight="Bold"/><TextBlock Grid.Column="4" Text="STATUS" Foreground="#7186A3" FontSize="9" FontWeight="Bold"/>
+              </Grid>
+            </Border>
+            <ItemsControl ItemsSource="{Binding Updates}">
+              <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                  <Border Background="#111B2D" BorderBrush="#263751" BorderThickness="1" CornerRadius="9" Padding="13" Margin="0,0,0,6">
+                    <Grid ColumnDefinitions="1.7*,1*,1*,1.4*,Auto" RowDefinitions="Auto,Auto">
+                      <StackPanel Spacing="3"><TextBlock Text="{Binding PackageId}" Foreground="#E8EEF8" FontSize="11" FontWeight="SemiBold"/><StackPanel Orientation="Horizontal" Spacing="8"><TextBlock Text="{Binding OrderLabel}" Foreground="#71B9EE" FontSize="9"/><TextBlock Text="{Binding ProjectCountLabel}" Foreground="#7588A5" FontSize="9"/></StackPanel></StackPanel>
+                      <TextBlock Grid.Column="1" Text="{Binding CurrentVersion}" Foreground="#AABBD2" FontSize="10" VerticalAlignment="Center"/>
+                      <TextBlock Grid.Column="2" Text="{Binding TargetVersion}" Foreground="#65DDB4" FontSize="10" VerticalAlignment="Center"/>
+                      <TextBlock Grid.Column="3" Text="{Binding SourceFile}" Foreground="#8194AF" FontSize="9" TextTrimming="CharacterEllipsis" VerticalAlignment="Center"/>
+                      <Border Grid.Column="4" Background="#26364C" CornerRadius="6" Padding="7,4" VerticalAlignment="Center"><TextBlock Text="{Binding CanApplyLabel}" Foreground="#B7C8DC" FontSize="9"/></Border>
+                      <TextBlock Grid.Row="1" Grid.ColumnSpan="5" Text="{Binding BlockReason}" Foreground="#D2AB73" FontSize="9" TextWrapping="Wrap" Margin="0,7,0,0"/>
+                    </Grid>
+                  </Border>
+                </DataTemplate>
+              </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <Border Background="#111B2D" BorderBrush="#263751" BorderThickness="1" CornerRadius="12" Padding="15" IsVisible="{Binding HasOperationOutput}">
+              <StackPanel Spacing="8"><TextBlock Text="Operation result" Foreground="#DCE6F4" FontWeight="SemiBold"/><TextBox Text="{Binding LastOperationOutput}" IsReadOnly="True" AcceptsReturn="True" MinHeight="150" TextWrapping="Wrap"/><TextBlock Text="{Binding LastBackupPath}" Foreground="#7F94B1" FontSize="10"/></StackPanel>
+            </Border>
+            <TextBlock Text="No update plan has been generated. Scan the repository and select “Check NuGet updates”." Foreground="#7F91AB" FontSize="11" IsVisible="{Binding HasNoSnapshot}"/>
+          </StackPanel>
+
+          <!-- Settings -->
+          <StackPanel IsVisible="{Binding IsSettings}" Spacing="18">
+            <StackPanel Spacing="5"><TextBlock Text="Settings" FontSize="25" FontWeight="Bold" Foreground="#F4F7FC"/><TextBlock Text="Application configuration and package source information." Foreground="#8C9BB2" FontSize="12"/></StackPanel>
+            <Border Background="#111B2D" BorderBrush="#263751" BorderThickness="1" CornerRadius="12" Padding="18">
+              <StackPanel Spacing="12">
+                <TextBlock Text="NuGet source" Foreground="#EAF0F9" FontWeight="SemiBold"/><TextBlock Text="Public NuGet V3 flat container (nuget.org)" Foreground="#8EC8FF" FontSize="12"/><TextBlock Text="Version discovery and .nupkg inspection currently use public nuget.org. Project evaluation and Restore use the repository MSBuild context and NuGet.Config." Foreground="#899BB4" FontSize="11" TextWrapping="Wrap"/>
+                <Border Height="1" Background="#24334B"/>
+                <TextBlock Text="Safe updates" Foreground="#EAF0F9" FontWeight="SemiBold"/><TextBlock Text="Automatic editing requires a literal version and an unambiguous XML element. Only the version text is patched; the XML declaration, whitespace, line endings, attribute order, and quote style are preserved. A write failure restores the original bytes. Restore or Build failures do not automatically revert saved changes." Foreground="#899BB4" FontSize="11" TextWrapping="Wrap"/>
+                <Border Height="1" Background="#24334B"/>
+                <TextBlock Text="Target framework" Foreground="#EAF0F9" FontWeight="SemiBold"/><TextBlock Text="The selected TFM is used only to find compatible package versions. It does not change TargetFramework/TargetFrameworks. Restore and Build run with the project’s actual settings; developers perform .NET target framework migrations separately." Foreground="#899BB4" FontSize="11" TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+          </StackPanel>
+
+          <!-- Help -->
+          <StackPanel IsVisible="{Binding IsHelp}" Spacing="16">
+            <StackPanel Spacing="5">
+              <TextBlock Text="Help &amp; documentation" FontSize="25" FontWeight="Bold" Foreground="#F4F7FC"/>
+              <TextBlock Text="Explanations of scan results, package states, management modes, and safe update behavior." Foreground="#8C9BB2" FontSize="12" TextWrapping="Wrap"/>
+            </StackPanel>
+            <Border Background="#111B2D" BorderBrush="#263751" BorderThickness="1" CornerRadius="12" Padding="17">
+              <StackPanel Spacing="9">
+                <TextBlock Text="Getting started" Foreground="#EAF0F9" FontSize="15" FontWeight="SemiBold"/>
+                <TextBlock Text="1. Select the solution directory, a .sln/.slnx file, or a directory containing .csproj files. 2. Scan the repository. 3. Review Projects and All packages. 4. Enter the target TFM used for compatibility checks. 5. Check NuGet updates, review every proposed change, then export or apply the plan." Foreground="#AFC0D7" FontSize="11" TextWrapping="Wrap"/>
+                <TextBlock Text="Important: the selected target TFM is an analysis target only. PUTool does not migrate TargetFramework/TargetFrameworks or change global.json." Foreground="#76B9E8" FontSize="11" TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+            <Border Background="#111B2D" BorderBrush="#263751" BorderThickness="1" CornerRadius="12" Padding="17">
+              <StackPanel Spacing="9">
+                <TextBlock Text="Analysis status and scan messages" Foreground="#EAF0F9" FontSize="15" FontWeight="SemiBold"/>
+                <TextBlock Text="Preparing scan... means the scanner is discovering projects and reading the local .NET environment. Parallel analysis (N threads) reports the maximum number of concurrent MSBuild evaluations; it is the configured worker limit. The completed/total value shows how many project evaluations have finished." Foreground="#AFC0D7" FontSize="11" TextWrapping="Wrap"/>
+                <TextBlock Text="Scan complete means project evaluation finished. Warnings are listed under Scan findings on Overview. A missing project.assets.json means resolved and transitive versions are not available until you run dotnet restore and scan again." Foreground="#AFC0D7" FontSize="11" TextWrapping="Wrap"/>
+                <TextBlock Text="A scan error means at least one required operation failed. Open the operation output to inspect the MSBuild or dotnet diagnostic details." Foreground="#AFC0D7" FontSize="11" TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+            <Border Background="#111B2D" BorderBrush="#263751" BorderThickness="1" CornerRadius="12" Padding="17">
+              <StackPanel Spacing="9">
+                <TextBlock Text="Package management modes" Foreground="#EAF0F9" FontSize="15" FontWeight="SemiBold"/>
+                <TextBlock Text="Central: package versions are supplied by Central Package Management, normally through an imported Directory.Packages.props or another imported props file. Local: the package version is declared in the project file. Override: a project-level VersionOverride supersedes the central version. Mixed: the project uses more than one version management approach. Transitive: the package is brought in by another package rather than a direct PackageReference. Unknown: MSBuild data was insufficient to classify the declaration." Foreground="#AFC0D7" FontSize="11" TextWrapping="Wrap"/>
+                <TextBlock Text="The central file name is not assumed. PUTool relies on evaluated MSBuild items and their defining-file metadata when available." Foreground="#76B9E8" FontSize="11" TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+            <Border Background="#111B2D" BorderBrush="#263751" BorderThickness="1" CornerRadius="12" Padding="17">
+              <StackPanel Spacing="9">
+                <TextBlock Text="Package list views" Foreground="#EAF0F9" FontSize="15" FontWeight="SemiBold"/>
+                <TextBlock Text="All usages: displays every reference occurrence, including repeated package IDs across projects and target frameworks. Package catalog: one detailed row per package ID, with versions, TFMs, management modes, and project counts aggregated; project paths are hidden. By project: groups packages by project and shows each package once within that project; a package is repeated under other projects that use it. Unique package IDs: a compact unique-name list with usage and project counts only." Foreground="#AFC0D7" FontSize="11" TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+            <Border Background="#111B2D" BorderBrush="#263751" BorderThickness="1" CornerRadius="12" Padding="17">
+              <StackPanel Spacing="9">
+                <TextBlock Text="Update plan statuses" Foreground="#EAF0F9" FontSize="15" FontWeight="SemiBold"/>
+                <TextBlock Text="Applicable means PUTool found a literal version value and an unambiguous source declaration that can be patched without reformatting the XML. Needs review means automatic editing is blocked. Typical reasons include an MSBuild property expression, a Condition, multiple matching declarations, a missing source file, or differing recommendations across TFMs. The reason is displayed below the package row." Foreground="#AFC0D7" FontSize="11" TextWrapping="Wrap"/>
+                <TextBlock Text="Latest compatible is a metadata-based recommendation, not a guarantee that the full solution builds. Restore resolves the actual dependency graph; Build is the final compilation check. Review both results before considering an update complete." Foreground="#AFC0D7" FontSize="11" TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+            <Border Background="#111B2D" BorderBrush="#263751" BorderThickness="1" CornerRadius="12" Padding="17">
+              <StackPanel Spacing="9">
+                <TextBlock Text="Applying changes, backups, and failures" Foreground="#EAF0F9" FontSize="15" FontWeight="SemiBold"/>
+                <TextBlock Text="The backup checkbox is enabled by default. When enabled, original files are copied to a timestamped backup directory before editing. XML edits patch only the version text and preserve other bytes, whitespace, line endings, attribute order, and quote style." Foreground="#AFC0D7" FontSize="11" TextWrapping="Wrap"/>
+                <TextBlock Text="If writing a file fails, PUTool attempts to restore the original bytes. If Restore or Build fails after files were saved, changes are intentionally kept and the backup remains available for a manual rollback. Check the operation output and Git diff." Foreground="#AFC0D7" FontSize="11" TextWrapping="Wrap"/>
+                <TextBlock Text="Export .md opens a system Save File dialog. Exporting does not modify the repository." Foreground="#AFC0D7" FontSize="11" TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+            <Border Background="#111B2D" BorderBrush="#263751" BorderThickness="1" CornerRadius="12" Padding="17">
+              <StackPanel Spacing="9">
+                <TextBlock Text="SDK and target framework" Foreground="#EAF0F9" FontSize="15" FontWeight="SemiBold"/>
+                <TextBlock Text="The SDK displayed by PUTool is resolved by the .NET host from the selected working directory, including any global.json policy. The target TFM field is separate: it is used to query package compatibility. PUTool does not change global.json or project TFM declarations." Foreground="#AFC0D7" FontSize="11" TextWrapping="Wrap"/>
+              </StackPanel>
+            </Border>
+          </StackPanel>
+        </Grid>
+      </ScrollViewer>
+    </Grid>
+  </Grid>
+</Window>

@@ -1,0 +1,49 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:fluent="using:Avalonia.Themes.Fluent"
+             x:Class="PUTool.Desktop.App"
+             RequestedThemeVariant="Dark">
+  <Application.Styles>
+    <fluent:FluentTheme />
+    <Style Selector="Button">
+      <Setter Property="CornerRadius" Value="9" />
+      <Setter Property="Padding" Value="14,9" />
+      <Setter Property="FontSize" Value="13" />
+      <Setter Property="Cursor" Value="Hand" />
+    </Style>
+    <Style Selector="Button.nav">
+      <Setter Property="HorizontalContentAlignment" Value="Left" />
+      <Setter Property="Background" Value="Transparent" />
+      <Setter Property="Foreground" Value="#AAB6CC" />
+      <Setter Property="Padding" Value="13,11" />
+      <Setter Property="Margin" Value="0,3" />
+    </Style>
+    <Style Selector="Button.nav:pointerover">
+      <Setter Property="Background" Value="#1C2940" />
+      <Setter Property="Foreground" Value="#F4F7FC" />
+    </Style>
+    <Style Selector="Button.nav.selected">
+      <Setter Property="Background" Value="#203A61" />
+      <Setter Property="Foreground" Value="#8CC7FF" />
+    </Style>
+    <Style Selector="Button.primary">
+      <Setter Property="Background" Value="#3979D6" />
+      <Setter Property="Foreground" Value="White" />
+      <Setter Property="FontWeight" Value="SemiBold" />
+    </Style>
+    <Style Selector="Button.primary:pointerover">
+      <Setter Property="Background" Value="#4B8BE8" />
+    </Style>
+    <Style Selector="Button.subtle">
+      <Setter Property="Background" Value="#1A263B" />
+      <Setter Property="Foreground" Value="#D5DEED" />
+    </Style>
+    <Style Selector="TextBox">
+      <Setter Property="Background" Value="#111C2E" />
+      <Setter Property="Foreground" Value="#E8EEF8" />
+      <Setter Property="BorderBrush" Value="#2B3A53" />
+      <Setter Property="CornerRadius" Value="8" />
+      <Setter Property="Padding" Value="11,8" />
+    </Style>
+  </Application.Styles>
+</Application>
